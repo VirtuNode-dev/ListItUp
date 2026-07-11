@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ListItUp Sample Component</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            geist: ["Geist", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          },
+          boxShadow: {
+            panel: "0 2.8px 2.2px rgba(0,0,0,.034), 0 6.7px 5.3px rgba(0,0,0,.048), 0 12.5px 10px rgba(0,0,0,.06), 0 22.3px 17.9px rgba(0,0,0,.072), 0 41.8px 33.4px rgba(0,0,0,.086), 0 100px 80px rgba(0,0,0,.12)"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+
+    .gradient-border {
+      border: 1px solid transparent;
+      background:
+        linear-gradient(#080808, #080808) padding-box,
+        linear-gradient(135deg, rgba(255,107,74,.32), rgba(26,26,26,1) 42%) border-box;
+    }
+  </style>
+</head>
+<body class="min-h-screen overflow-x-hidden bg-[#e5e5e0] p-4 text-neutral-300 antialiased md:p-8 lg:p-16">
+  <main class="mx-auto flex min-h-[calc(100vh-2rem)] w-full max-w-7xl items-center md:min-h-[calc(100vh-4rem)] lg:min-h-[calc(100vh-8rem)]">
+    <section class="gradient-border relative flex w-full flex-col overflow-hidden bg-[#080808] shadow-panel">
+      <canvas id="network-canvas" class="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-40"></canvas>
+
+      <div class="relative z-10 flex w-full flex-col border-b border-[#1a1a1a] lg:flex-row">
+        <div class="relative flex w-full flex-col justify-center border-b border-[#1a1a1a] p-8 lg:w-[42%] lg:border-b-0 lg:border-r lg:p-12 xl:p-16">
+          <span class="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 font-mono text-xs text-[#333]">+</span>
+          <span class="absolute bottom-0 right-0 hidden translate-x-1/2 translate-y-1/2 font-mono text-xs text-[#333] lg:block">+</span>
+          <span class="absolute bottom-0 left-0 block -translate-x-1/2 translate-y-1/2 font-mono text-xs text-[#333] lg:hidden">+</span>
+
+          <div class="mb-6 flex items-center gap-3">
+            <span class="font-mono text-xs uppercase tracking-widest text-[#ff6b4a]">// ListItUp Protocol</span>
+          </div>
+
+          <h1 class="mb-6 max-w-xl text-3xl font-light leading-tight tracking-tight text-white md:text-4xl lg:text-5xl" style="text-wrap: balance;">
+            Turning scattered intent into structured lists.
+          </h1>
+
+          <p class="mb-10 max-w-md font-geist text-sm font-light leading-relaxed text-neutral-500 md:text-base">
+            A focused workspace for capturing items fast, organizing them clearly, and keeping useful lists close at hand.
+          </p>
+
+          <form class="group flex w-full max-w-md shadow-[0_2px_3px_-1px_rgba(0,0,0,.1),0_1px_0_0_rgba(25,28,33,.02),0_0_0_1px_rgba(25,28,33,.08)]">
+            <label class="sr-only" for="email">Email address</label>
+            <input id="email" type="email" placeholder="Enter your email" class="w-full rounded-none border border-[#1a1a1a] bg-transparent px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-colors group-hover:border-[#333] focus:border-[#ff6b4a] focus:outline-none">
+            <button type="submit" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-none border border-[#ff6b4a] bg-[#ff6b4a] px-5 py-3 font-geist text-sm font-normal text-black transition-colors hover:bg-[#ff8a70] sm:px-6">
+              Stay Updated
+              <iconify-icon icon="solar:arrow-right-up-linear" class="text-xl" aria-hidden="true"></iconify-icon>
+            </button>
+          </form>
+        </div>
+
+        <nav class="relative grid w-full grid-cols-2 sm:grid-cols-4 lg:w-[58%]" aria-label="Footer navigation">
+          <div class="flex flex-col gap-y-4 border-b border-r border-[#1a1a1a] p-8 sm:border-b-0 xl:p-12">
+            <span class="mb-2 font-mono text-xs uppercase tracking-widest text-[#ff6b4a]">// Workspace</span>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Lists</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Capture</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Archive</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Templates</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Search</a>
+          </div>
+
+          <div class="relative flex flex-col gap-y-4 border-b border-r border-[#1a1a1a] p-8 sm:border-b-0 xl:p-12">
+            <span class="absolute bottom-0 left-0 block -translate-x-1/2 translate-y-1/2 font-mono text-xs text-[#333] sm:hidden">+</span>
+            <span class="mb-2 font-mono text-xs uppercase tracking-widest text-[#ff6b4a]">// Organize</span>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Priorities</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Groups</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Tags</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Filters</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Review</a>
+          </div>
+
+          <div class="flex flex-col gap-y-4 border-r border-[#1a1a1a] p-8 xl:p-12">
+            <span class="mb-2 font-mono text-xs uppercase tracking-widest text-[#ff6b4a]">// Sync</span>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Mobile</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Shortcuts</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Imports</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Exports</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Integrations</a>
+          </div>
+
+          <div class="flex flex-col gap-y-4 p-8 xl:p-12">
+            <span class="mb-2 font-mono text-xs uppercase tracking-widest text-[#ff6b4a]">// Account</span>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Profile</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Billing</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Support</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Privacy</a>
+            <a href="#" class="font-geist text-sm font-light text-neutral-500 transition-colors hover:text-white">Terms</a>
+          </div>
+        </nav>
+      </div>
+
+      <div class="relative z-10 flex flex-col items-center justify-between gap-4 border-b border-[#1a1a1a] px-8 py-5 md:flex-row">
+        <span class="absolute left-0 top-0 hidden -translate-x-1/2 -translate-y-1/2 font-mono text-xs text-[#333] lg:block">+</span>
+        <span class="absolute bottom-0 left-0 hidden -translate-x-1/2 translate-y-1/2 font-mono text-xs text-[#333] lg:block">+</span>
+        <span class="absolute right-0 top-0 hidden -translate-y-1/2 translate-x-1/2 font-mono text-xs text-[#333] lg:block">+</span>
+        <span class="absolute bottom-0 right-0 hidden translate-x-1/2 translate-y-1/2 font-mono text-xs text-[#333] lg:block">+</span>
+
+        <div class="flex items-center gap-3">
+          <div class="relative flex h-1.5 w-1.5 items-center justify-center rounded-full bg-[#ff6b4a]">
+            <div class="absolute inset-0 animate-ping rounded-full bg-[#ff6b4a] opacity-75"></div>
+          </div>
+          <span class="font-mono text-xs uppercase tracking-widest text-[#ff6b4a]">Built for daily capture.</span>
+        </div>
+
+        <div id="data-bars" class="flex h-4 items-end gap-[3px] opacity-80" aria-hidden="true"></div>
+
+        <div class="font-mono text-xs uppercase tracking-widest text-neutral-600">
+          [ Workspace Ready ]
+        </div>
+      </div>
+
+      <footer class="relative z-10 grid grid-cols-1 items-center gap-8 px-8 py-8 md:grid-cols-12 lg:py-10">
+        <div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6 md:col-span-4">
+          <div class="flex items-center gap-2 text-white">
+            <iconify-icon icon="solar:checklist-minimalistic-linear" class="text-3xl text-[#ff6b4a]" aria-hidden="true"></iconify-icon>
+            <span class="font-geist text-lg font-normal tracking-tight">ListItUp</span>
+          </div>
+          <div class="hidden h-8 w-px bg-[#1a1a1a] sm:block"></div>
+          <p class="max-w-[220px] font-geist text-xs font-light leading-snug text-neutral-500">
+            Capture quickly. Organize clearly. Return to what matters.
+          </p>
+        </div>
+
+        <div class="flex justify-start md:col-span-4 md:justify-center">
+          <p class="font-geist text-xs font-light text-neutral-600">
+            © 2026 ListItUp.<br class="block sm:hidden"> All rights reserved.
+          </p>
+        </div>
+
+        <div class="flex flex-col items-start justify-start gap-6 md:col-span-4 md:justify-end xl:flex-row xl:items-center">
+          <div class="flex gap-4">
+            <a href="#" class="font-geist text-xs font-light text-neutral-600 transition-colors hover:text-neutral-400">Privacy Policy</a>
+            <a href="#" class="font-geist text-xs font-light text-neutral-600 transition-colors hover:text-neutral-400">Terms of Service</a>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <span class="mr-2 font-mono text-[10px] uppercase tracking-widest text-[#ff6b4a]">// Connect</span>
+            <a href="#" class="text-neutral-500 transition-colors hover:text-white" aria-label="Website">
+              <iconify-icon icon="solar:global-linear" class="text-xl" aria-hidden="true"></iconify-icon>
+            </a>
+            <a href="#" class="text-neutral-500 transition-colors hover:text-white" aria-label="Email">
+              <iconify-icon icon="solar:letter-linear" class="text-xl" aria-hidden="true"></iconify-icon>
+            </a>
+            <a href="#" class="text-neutral-500 transition-colors hover:text-white" aria-label="Social">
+              <iconify-icon icon="solar:hashtag-linear" class="text-xl" aria-hidden="true"></iconify-icon>
+            </a>
+          </div>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    const barsContainer = document.getElementById("data-bars");
+    const numBars = 40;
+
+    for (let i = 0; i < numBars; i += 1) {
+      const bar = document.createElement("div");
+      bar.className = "w-[3px] rounded-sm bg-[#1a1a1a] transition-all duration-300";
+      bar.style.height = "4px";
+      barsContainer.appendChild(bar);
+    }
+
+    const bars = barsContainer.children;
+    let step = 0;
+
+    function updateBars() {
+      for (let i = 0; i < bars.length; i += 1) {
+        const noise = Math.random() * 0.2;
+        const wave = Math.sin((i * 0.3) + step) + noise;
+        const height = Math.max(4, Math.floor((wave + 1) * 6));
+
+        bars[i].style.height = `${height}px`;
+
+        if (wave > 0.8) {
+          bars[i].style.backgroundColor = "#ff6b4a";
+          bars[i].style.boxShadow = "0 0 4px rgba(255, 107, 74, .4)";
+        } else if (wave > 0.2) {
+          bars[i].style.backgroundColor = "#333";
+          bars[i].style.boxShadow = "none";
+        } else {
+          bars[i].style.backgroundColor = "#1a1a1a";
+          bars[i].style.boxShadow = "none";
+        }
+      }
+
+      step += 0.15;
+      requestAnimationFrame(updateBars);
+    }
+
+    updateBars();
+
+    const canvas = document.getElementById("network-canvas");
+    const ctx = canvas.getContext("2d");
+    const connectionDistance = 120;
+    let width = 0;
+    let height = 0;
+    let particles = [];
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = (Math.random() - 0.5) * 0.3;
+        this.radius = Math.random() * 1.5 + 0.5;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = "#333333";
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      const count = Math.min(Math.floor((width * height) / 15000), 100);
+
+      for (let i = 0; i < count; i += 1) {
+        particles.push(new Particle());
+      }
+    }
+
+    function resizeCanvas() {
+      const ratio = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+
+      width = rect.width;
+      height = rect.height;
+      canvas.width = Math.floor(width * ratio);
+      canvas.height = Math.floor(height * ratio);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      initParticles();
+    }
+
+    function animateNetwork() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i += 1) {
+        particles[i].update();
+        particles[i].draw();
+
+        for (let j = i + 1; j < particles.length; j += 1) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt((dx * dx) + (dy * dy));
+
+          if (distance < connectionDistance) {
+            const opacity = 1 - (distance / connectionDistance);
+
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(51, 51, 51, ${opacity * 0.5})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animateNetwork);
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+    animateNetwork();
+  </script>
+</body>
+</html>
