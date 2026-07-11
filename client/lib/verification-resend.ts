@@ -1,5 +1,5 @@
 import type { PrismaClient } from "@/generated/prisma/client";
-import { VERIFICATION_RESEND_COOLDOWN_SECONDS } from "@/lib/auth-config";
+import { VERIFICATION_RESEND_COOLDOWN_SECONDS } from "@/lib/auth/auth-config";
 
 export function canResendVerificationEmail(
   lastSentAt: Date | null,

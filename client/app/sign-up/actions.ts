@@ -4,10 +4,10 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { APIError } from "better-auth";
 
-import { auth } from "@/lib/auth";
-import { MIN_PASSWORD_LENGTH } from "@/lib/auth-config";
+import { auth } from "@/lib/auth/auth";
+import { MIN_PASSWORD_LENGTH } from "@/lib/auth/auth-config";
 import { isSafeRelativeCallbackUrl } from "@/lib/callback-url";
-import { normalizeEmail } from "@/lib/normalize-email";
+import { normalizeEmail } from "@/lib/auth/normalize-email";
 
 export type SignUpFormState =
   { status: "idle" } | { status: "error"; message: string };

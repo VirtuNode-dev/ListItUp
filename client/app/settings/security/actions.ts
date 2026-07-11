@@ -5,13 +5,13 @@ import { revalidatePath } from "next/cache";
 import { APIError } from "better-auth";
 import QRCode from "qrcode";
 
-import { auth } from "@/lib/auth";
-import { VERIFICATION_TOKEN_EXPIRES_IN_HOURS } from "@/lib/auth-config";
-import { getAuthSecret } from "@/lib/auth-secret";
+import { auth } from "@/lib/auth/auth";
+import { VERIFICATION_TOKEN_EXPIRES_IN_HOURS } from "@/lib/auth/auth-config";
+import { getAuthSecret } from "@/lib/auth/auth-secret";
 import { recoveryCodeNoticeEmail } from "@/lib/mailer/email-templates/recovery-code-notice";
 import { twoFactorNoticeEmail } from "@/lib/mailer/email-templates/two-factor-notice";
 import { mailer } from "@/lib/mailer/mailer";
-import { normalizeEmail } from "@/lib/normalize-email";
+import { normalizeEmail } from "@/lib/auth/normalize-email";
 import {
   clearPendingEmailChange,
   recordPendingEmailChange,

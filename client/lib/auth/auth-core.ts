@@ -20,7 +20,7 @@ import {
   VERIFICATION_RESEND_COOLDOWN_SECONDS,
   VERIFICATION_TOKEN_EXPIRES_IN_HOURS,
   VERIFICATION_TOKEN_EXPIRES_IN_SECONDS,
-} from "@/lib/auth-config";
+} from "@/lib/auth/auth-config";
 import { emailChangeEmail } from "@/lib/mailer/email-templates/email-change";
 import { emailChangedNoticeEmail } from "@/lib/mailer/email-templates/email-changed-notice";
 import { magicLinkEmail } from "@/lib/mailer/email-templates/magic-link";

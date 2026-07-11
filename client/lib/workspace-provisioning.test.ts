@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 
-import { INBOX_LIST_NAME, PERSONAL_WORKSPACE_NAME } from "./auth-config";
+import {
+  INBOX_LIST_NAME,
+  PERSONAL_WORKSPACE_NAME,
+} from "@/lib/auth/auth-config";
 import { provisionPersonalWorkspace } from "./workspace-provisioning";
 
 async function run() {

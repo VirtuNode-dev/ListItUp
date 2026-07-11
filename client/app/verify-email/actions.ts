@@ -3,9 +3,9 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { auth } from "@/lib/auth";
+import { auth } from "@/lib/auth/auth";
 import { isSafeRelativeCallbackUrl } from "@/lib/callback-url";
-import { normalizeEmail } from "@/lib/normalize-email";
+import { normalizeEmail } from "@/lib/auth/normalize-email";
 import { prisma } from "@/lib/prisma";
 import { resendVerificationEmailIfAllowed } from "@/lib/verification-resend";
 

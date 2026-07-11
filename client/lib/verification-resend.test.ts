@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 
 import { canResendVerificationEmail } from "./verification-resend";
-import { VERIFICATION_RESEND_COOLDOWN_SECONDS } from "./auth-config";
+import { VERIFICATION_RESEND_COOLDOWN_SECONDS } from "@/lib/auth/auth-config";
 
 function run() {
   const now = new Date("2026-07-11T12:00:00.000Z");

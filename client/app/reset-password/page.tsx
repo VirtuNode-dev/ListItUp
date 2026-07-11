@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { ArrowUpRight, Eye, EyeClosed, LockKeyhole } from "lucide-react";
 
 import { AuthPageShell } from "@/components/auth/AuthPageShell";
-import { MIN_PASSWORD_LENGTH } from "@/lib/auth-config";
+import { MIN_PASSWORD_LENGTH } from "@/lib/auth/auth-config";
 import { resetPasswordAction, type ResetPasswordFormState } from "./actions";
 
 const initialState: ResetPasswordFormState = { status: "idle" };

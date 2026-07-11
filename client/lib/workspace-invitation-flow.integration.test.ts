@@ -42,7 +42,7 @@ async function run() {
   const [{ PrismaPg }, { PrismaClient }, { createAuth }] = await Promise.all([
     import("@prisma/adapter-pg"),
     import("@/generated/prisma/client"),
-    import("./auth-core"),
+    import("@/lib/auth/auth-core"),
   ]);
   const prisma = new PrismaClient({
     adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),

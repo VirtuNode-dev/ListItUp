@@ -1,4 +1,6 @@
-import { createAuth } from "@/lib/auth-core";
+import "server-only";
+
+import { createAuth } from "@/lib/auth/auth-core";
 import { prisma } from "@/lib/prisma";
 import { mailer } from "@/lib/mailer/mailer";
 

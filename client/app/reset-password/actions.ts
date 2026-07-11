@@ -3,8 +3,8 @@
 import { redirect } from "next/navigation";
 import { APIError } from "better-auth";
 
-import { auth } from "@/lib/auth";
-import { MIN_PASSWORD_LENGTH } from "@/lib/auth-config";
+import { auth } from "@/lib/auth/auth";
+import { MIN_PASSWORD_LENGTH } from "@/lib/auth/auth-config";
 
 export type ResetPasswordFormState =
   { status: "idle" } | { status: "error"; message: string };

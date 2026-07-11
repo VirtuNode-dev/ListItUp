@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { APIError } from "better-auth";
 
-import { auth } from "@/lib/auth";
+import { auth } from "@/lib/auth/auth";
 import { isSafeRelativeCallbackUrl } from "@/lib/callback-url";
 
 export type TwoFactorChallengeFormState =

@@ -2,8 +2,8 @@
 
 import { headers } from "next/headers";
 
-import { auth } from "@/lib/auth";
-import { normalizeEmail } from "@/lib/normalize-email";
+import { auth } from "@/lib/auth/auth";
+import { normalizeEmail } from "@/lib/auth/normalize-email";
 
 export type ForgotPasswordFormState = { status: "idle" } | { status: "sent" };
 

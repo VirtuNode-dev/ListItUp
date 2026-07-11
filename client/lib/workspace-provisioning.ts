@@ -1,7 +1,10 @@
 import { randomUUID } from "node:crypto";
 
 import type { PrismaClient } from "@/generated/prisma/client";
-import { INBOX_LIST_NAME, PERSONAL_WORKSPACE_NAME } from "@/lib/auth-config";
+import {
+  INBOX_LIST_NAME,
+  PERSONAL_WORKSPACE_NAME,
+} from "@/lib/auth/auth-config";
 
 const UNIQUE_CONSTRAINT_VIOLATION_CODE = "P2002";
 

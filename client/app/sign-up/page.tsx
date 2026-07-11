@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 import { AuthPageShell } from "@/components/auth/AuthPageShell";
-import { MIN_PASSWORD_LENGTH } from "@/lib/auth-config";
+import { MIN_PASSWORD_LENGTH } from "@/lib/auth/auth-config";
 import { signUpAction, type SignUpFormState } from "./actions";
 
 const initialState: SignUpFormState = { status: "idle" };

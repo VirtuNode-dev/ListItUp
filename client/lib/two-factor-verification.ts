@@ -4,7 +4,7 @@ import { createOTP } from "@better-auth/utils/otp";
 import {
   TWO_FACTOR_TOTP_DIGITS,
   TWO_FACTOR_TOTP_PERIOD_SECONDS,
-} from "@/lib/auth-config";
+} from "@/lib/auth/auth-config";
 
 export async function verifyStoredTotpCode(
   encryptedSecret: string,

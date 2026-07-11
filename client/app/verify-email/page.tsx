@@ -4,7 +4,7 @@ import { Suspense, useActionState, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Mail } from "lucide-react";
 
-import { VERIFICATION_RESEND_COOLDOWN_SECONDS } from "@/lib/auth-config";
+import { VERIFICATION_RESEND_COOLDOWN_SECONDS } from "@/lib/auth/auth-config";
 import {
   resendVerificationAction,
   signOutAction,

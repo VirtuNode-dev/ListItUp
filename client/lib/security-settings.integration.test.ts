@@ -62,7 +62,7 @@ async function run() {
   ] = await Promise.all([
     import("@prisma/adapter-pg"),
     import("@/generated/prisma/client"),
-    import("./auth-core"),
+    import("@/lib/auth/auth-core"),
     import("./pending-email-change"),
   ]);
   const prisma = new PrismaClient({

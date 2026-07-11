@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import Link from "next/link";
 
-import { auth } from "@/lib/auth";
+import { auth } from "@/lib/auth/auth";
 import { prisma } from "@/lib/prisma";
 import { resolveInvitation } from "@/lib/workspace-invitations";
 import { acceptInvitationAction } from "./actions";
