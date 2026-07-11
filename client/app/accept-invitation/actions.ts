@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 import { auth } from "@/lib/auth/auth";
 import { prisma } from "@/lib/prisma";
-import { acceptInvitation } from "@/lib/workspace-invitations";
+import { acceptInvitation } from "@/lib/workspace/workspace-invitations";
 
 export async function acceptInvitationAction(
   formData: FormData

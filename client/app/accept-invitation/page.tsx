@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { auth } from "@/lib/auth/auth";
 import { prisma } from "@/lib/prisma";
-import { resolveInvitation } from "@/lib/workspace-invitations";
+import { resolveInvitation } from "@/lib/workspace/workspace-invitations";
 import { acceptInvitationAction } from "./actions";
 
 const cardClass = "w-full max-w-md border border-[#1a1a1a] bg-[#0b0b0b]/80 p-8";

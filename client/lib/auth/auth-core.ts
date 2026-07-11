@@ -36,7 +36,7 @@ import {
   recordVerificationEmailSent,
   resendVerificationEmailIfAllowed,
 } from "@/lib/verification-resend";
-import { provisionPersonalWorkspace } from "@/lib/workspace-provisioning";
+import { provisionPersonalWorkspace } from "@/lib/workspace/workspace-provisioning";
 
 export function createAuth(database: PrismaClient, mailer: Mailer) {
   async function sendVerificationEmail(email: string, url: string) {
