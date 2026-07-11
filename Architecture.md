@@ -37,7 +37,14 @@ client/
 │   └── globals.css Tailwind entry + design tokens
 ├── components/
 │   └── ui/         generated shadcn primitives — do not hand-edit heavily, regenerate via `shadcn` instead
-├── lib/            framework-agnostic utilities (e.g. `lib/utils.ts` for `cn()`)
+├── lib/            shared logic, grouped by feature
+│   ├── auth/       Better Auth instance/config, sign-in/reset tokens, verification & email-change
+│   ├── mailer/     SMTP transport, config, and transactional email templates
+│   ├── session/    protected-route redirect logic, callback-url validation
+│   ├── two-factor/ TOTP/backup-code verification
+│   ├── workspace/  personal workspace provisioning, workspace invitations
+│   ├── prisma.ts, database-url.ts, utils.ts   cross-cutting infra with no single feature owner
+│   └── */*.test.ts, */*.integration.test.ts   colocated with the module they cover
 └── public/         static assets
 ```
 
@@ -47,8 +54,8 @@ Import alias `@/*` maps to `client/*` (see `tsconfig.json`). Use `@/components`,
 
 - New routes/screens: `app/<route>/page.tsx`, colocating route-local components next to the route.
 - Shared, reusable UI: `components/`. Generated primitives stay in `components/ui/`; compose them into feature components elsewhere in `components/`.
-- Non-UI helpers, formatting, and shared logic: `lib/`.
-- Server-only code (DB access, auth checks): Server Components, Server Actions, or Route Handlers — never imported into a `"use client"` file. See `docs/agents/nextjs-conventions.md`.
+- Shared logic: `lib/<feature>/`, grouped by the feature it belongs to (see the structure above) rather than left flat. Only genuinely cross-cutting infra with no single feature owner (the Prisma client, `cn()`, etc.) stays at `lib/` root.
+- Server-only code (DB access, auth checks): Server Components, Server Actions, or Route Handlers — never imported into a `"use client"` file. See `docs/agents/nextjs-conventions.md`. Modules that touch a secret or the database directly should also add `import "server-only"` so a client-side import fails the build instead of relying on review — see the modules already doing this (`lib/auth/auth.ts`, `lib/mailer/mailer.ts`, `lib/prisma.ts`, etc.) for the pattern. Skip the marker on a module that a colocated `*.test.ts` imports directly via `tsx`: the `server-only` package only no-ops under a bundler's `react-server` export condition, which plain `tsx` never sets, so marking such a module breaks its own test.
 
 ## Testing
 
