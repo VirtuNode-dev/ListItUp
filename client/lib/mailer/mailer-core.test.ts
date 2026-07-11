@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 
-import { createMailer, type MailTransport } from "./mailer-core";
+import { createMailer, type MailTransport } from "@/lib/mailer/mailer-core";
 import type { MailerConfig } from "./mailer-config";
 import { verificationEmail } from "./email-templates/verification";
 

@@ -1,3 +1,5 @@
+import "server-only";
+
 export type MailProvider = "google" | "mailgun" | "brevo" | "custom";
 
 const KNOWN_PROVIDERS: readonly MailProvider[] = [

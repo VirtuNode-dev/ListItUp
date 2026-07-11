@@ -3,7 +3,11 @@ import { randomUUID } from "node:crypto";
 
 import { createOTP } from "@better-auth/utils/otp";
 
-import type { Mailer, SendEmailInput, SendEmailResult } from "./mailer-core";
+import type {
+  Mailer,
+  SendEmailInput,
+  SendEmailResult,
+} from "@/lib/mailer/mailer-core";
 
 function sessionCookie(response: Response): string | null {
   const setCookie = response.headers.get("set-cookie");

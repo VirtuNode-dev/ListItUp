@@ -3,7 +3,11 @@ import { randomUUID } from "node:crypto";
 
 import { createOTP } from "@better-auth/utils/otp";
 
-import type { Mailer, SendEmailInput, SendEmailResult } from "./mailer-core";
+import type {
+  Mailer,
+  SendEmailInput,
+  SendEmailResult,
+} from "@/lib/mailer/mailer-core";
 import { verifyAndConsumeBackupCode } from "./two-factor-verification";
 
 function sessionCookie(response: Response): string | null {
@@ -312,7 +316,7 @@ async function run() {
     // request, so they cannot be exercised from this tsx test harness. The
     // notice-sending calls are one line each and read directly off the
     // already-covered recoveryCodeNoticeEmail/twoFactorNoticeEmail
-    // templates (see lib/email-templates/templates.test.ts).
+    // templates (see lib/mailer/email-templates/templates.test.ts).
   } finally {
     await prisma.twoFactor.deleteMany({
       where: { user: { email: { in: testEmails } } },

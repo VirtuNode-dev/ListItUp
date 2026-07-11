@@ -8,9 +8,9 @@ import QRCode from "qrcode";
 import { auth } from "@/lib/auth";
 import { VERIFICATION_TOKEN_EXPIRES_IN_HOURS } from "@/lib/auth-config";
 import { getAuthSecret } from "@/lib/auth-secret";
-import { recoveryCodeNoticeEmail } from "@/lib/email-templates/recovery-code-notice";
-import { twoFactorNoticeEmail } from "@/lib/email-templates/two-factor-notice";
-import { mailer } from "@/lib/mailer";
+import { recoveryCodeNoticeEmail } from "@/lib/mailer/email-templates/recovery-code-notice";
+import { twoFactorNoticeEmail } from "@/lib/mailer/email-templates/two-factor-notice";
+import { mailer } from "@/lib/mailer/mailer";
 import { normalizeEmail } from "@/lib/normalize-email";
 import {
   clearPendingEmailChange,

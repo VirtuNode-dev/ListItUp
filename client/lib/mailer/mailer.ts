@@ -1,7 +1,9 @@
+import "server-only";
+
 import nodemailer from "nodemailer";
 
-import { createMailer } from "@/lib/mailer-core";
-import { loadMailerConfig } from "@/lib/mailer-config";
+import { createMailer } from "@/lib/mailer/mailer-core";
+import { loadMailerConfig } from "@/lib/mailer/mailer-config";
 
 const config = loadMailerConfig();
 const transport = nodemailer.createTransport({

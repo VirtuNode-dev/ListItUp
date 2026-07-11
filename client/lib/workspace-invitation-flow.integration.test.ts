@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 
-import type { Mailer, SendEmailInput, SendEmailResult } from "./mailer-core";
+import type {
+  Mailer,
+  SendEmailInput,
+  SendEmailResult,
+} from "@/lib/mailer/mailer-core";
 import { acceptInvitation } from "./workspace-invitations";
 
 function sessionCookie(response: Response): string | null {

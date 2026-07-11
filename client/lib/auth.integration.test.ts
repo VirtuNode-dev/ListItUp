@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 
-import type { Mailer, SendEmailInput, SendEmailResult } from "./mailer-core";
+import type {
+  Mailer,
+  SendEmailInput,
+  SendEmailResult,
+} from "@/lib/mailer/mailer-core";
 
 const THIRTY_DAYS_IN_SECONDS = 2_592_000;
 const SESSION_UPDATE_AGE_SECONDS = 86_400;

@@ -1,5 +1,5 @@
 import { createAuth } from "@/lib/auth-core";
 import { prisma } from "@/lib/prisma";
-import { mailer } from "@/lib/mailer";
+import { mailer } from "@/lib/mailer/mailer";
 
 export const auth = createAuth(prisma, mailer);

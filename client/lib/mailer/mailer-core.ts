@@ -1,5 +1,5 @@
-import type { MailerConfig } from "@/lib/mailer-config";
-import type { EmailTemplate } from "@/lib/email-templates/render";
+import type { MailerConfig } from "@/lib/mailer/mailer-config";
+import type { EmailTemplate } from "@/lib/mailer/email-templates/render";
 
 export type EmailMessageType =
   | "verification"

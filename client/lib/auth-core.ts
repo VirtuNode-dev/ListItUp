@@ -5,7 +5,7 @@ import { magicLink } from "better-auth/plugins/magic-link";
 import { twoFactor } from "better-auth/plugins/two-factor";
 
 import type { PrismaClient } from "@/generated/prisma/client";
-import type { Mailer } from "@/lib/mailer-core";
+import type { Mailer } from "@/lib/mailer/mailer-core";
 import {
   MAGIC_LINK_EXPIRES_IN_MINUTES,
   MAGIC_LINK_EXPIRES_IN_SECONDS,
@@ -21,11 +21,11 @@ import {
   VERIFICATION_TOKEN_EXPIRES_IN_HOURS,
   VERIFICATION_TOKEN_EXPIRES_IN_SECONDS,
 } from "@/lib/auth-config";
-import { emailChangeEmail } from "@/lib/email-templates/email-change";
-import { emailChangedNoticeEmail } from "@/lib/email-templates/email-changed-notice";
-import { magicLinkEmail } from "@/lib/email-templates/magic-link";
-import { passwordResetEmail } from "@/lib/email-templates/password-reset";
-import { verificationEmail } from "@/lib/email-templates/verification";
+import { emailChangeEmail } from "@/lib/mailer/email-templates/email-change";
+import { emailChangedNoticeEmail } from "@/lib/mailer/email-templates/email-changed-notice";
+import { magicLinkEmail } from "@/lib/mailer/email-templates/magic-link";
+import { passwordResetEmail } from "@/lib/mailer/email-templates/password-reset";
+import { verificationEmail } from "@/lib/mailer/email-templates/verification";
 import { invalidateOtherMagicLinkTokens } from "@/lib/magic-link-tokens";
 import { invalidateOtherPasswordResetTokens } from "@/lib/password-reset-tokens";
 import {
