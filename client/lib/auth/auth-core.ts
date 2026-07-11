@@ -26,8 +26,8 @@ import { emailChangedNoticeEmail } from "@/lib/mailer/email-templates/email-chan
 import { magicLinkEmail } from "@/lib/mailer/email-templates/magic-link";
 import { passwordResetEmail } from "@/lib/mailer/email-templates/password-reset";
 import { verificationEmail } from "@/lib/mailer/email-templates/verification";
-import { invalidateOtherMagicLinkTokens } from "@/lib/magic-link-tokens";
-import { invalidateOtherPasswordResetTokens } from "@/lib/password-reset-tokens";
+import { invalidateOtherMagicLinkTokens } from "@/lib/auth/magic-link-tokens";
+import { invalidateOtherPasswordResetTokens } from "@/lib/auth/password-reset-tokens";
 import {
   clearPendingEmailChange,
   resolvePendingEmailChange,
