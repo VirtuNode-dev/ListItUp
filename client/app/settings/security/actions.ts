@@ -20,7 +20,7 @@ import { prisma } from "@/lib/prisma";
 import {
   verifyAndConsumeBackupCode,
   verifyStoredTotpCode,
-} from "@/lib/two-factor-verification";
+} from "@/lib/two-factor/two-factor-verification";
 
 export type EnableTwoFactorState =
   | { status: "idle" }
