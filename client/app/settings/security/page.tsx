@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 
 import { auth } from "@/lib/auth/auth";
-import { requireAuthenticatedSession } from "@/lib/require-authenticated-session";
+import { requireAuthenticatedSession } from "@/lib/session/require-authenticated-session";
 import { EmailSettings } from "./EmailSettings";
 import { PasswordSettings } from "./PasswordSettings";
 import { SessionsList, type SessionSummary } from "./SessionsList";

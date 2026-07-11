@@ -1,4 +1,4 @@
-import { requireAuthenticatedSession } from "@/lib/require-authenticated-session";
+import { requireAuthenticatedSession } from "@/lib/session/require-authenticated-session";
 
 export default async function MyTasksPage() {
   const session = await requireAuthenticatedSession("/my-tasks");

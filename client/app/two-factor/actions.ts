@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { APIError } from "better-auth";
 
 import { auth } from "@/lib/auth/auth";
-import { isSafeRelativeCallbackUrl } from "@/lib/callback-url";
+import { isSafeRelativeCallbackUrl } from "@/lib/session/callback-url";
 
 export type TwoFactorChallengeFormState =
   { status: "idle" } | { status: "error"; message: string };

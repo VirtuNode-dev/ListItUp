@@ -6,7 +6,7 @@ import { APIError } from "better-auth";
 
 import { auth } from "@/lib/auth/auth";
 import { MIN_PASSWORD_LENGTH } from "@/lib/auth/auth-config";
-import { isSafeRelativeCallbackUrl } from "@/lib/callback-url";
+import { isSafeRelativeCallbackUrl } from "@/lib/session/callback-url";
 import { normalizeEmail } from "@/lib/auth/normalize-email";
 
 export type SignUpFormState =

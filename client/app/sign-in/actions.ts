@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { APIError } from "better-auth";
 
 import { auth } from "@/lib/auth/auth";
-import { isSafeRelativeCallbackUrl } from "@/lib/callback-url";
+import { isSafeRelativeCallbackUrl } from "@/lib/session/callback-url";
 import { normalizeEmail } from "@/lib/auth/normalize-email";
 
 export type SignInFormState =

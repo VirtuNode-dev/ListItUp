@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { prisma } from "@/lib/prisma";
-import { requireAuthenticatedSession } from "@/lib/require-authenticated-session";
+import { requireAuthenticatedSession } from "@/lib/session/require-authenticated-session";
 
 export default async function WorkspacePage({
   params,
