@@ -31,11 +31,11 @@ import { invalidateOtherPasswordResetTokens } from "@/lib/auth/password-reset-to
 import {
   clearPendingEmailChange,
   resolvePendingEmailChange,
-} from "@/lib/pending-email-change";
+} from "@/lib/auth/pending-email-change";
 import {
   recordVerificationEmailSent,
   resendVerificationEmailIfAllowed,
-} from "@/lib/verification-resend";
+} from "@/lib/auth/verification-resend";
 import { provisionPersonalWorkspace } from "@/lib/workspace/workspace-provisioning";
 
 export function createAuth(database: PrismaClient, mailer: Mailer) {

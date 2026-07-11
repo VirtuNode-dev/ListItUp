@@ -15,7 +15,7 @@ import { normalizeEmail } from "@/lib/auth/normalize-email";
 import {
   clearPendingEmailChange,
   recordPendingEmailChange,
-} from "@/lib/pending-email-change";
+} from "@/lib/auth/pending-email-change";
 import { prisma } from "@/lib/prisma";
 import {
   verifyAndConsumeBackupCode,
