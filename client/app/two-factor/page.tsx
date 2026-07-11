@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { Suspense, useActionState, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { KeyRound, ShieldCheck } from "lucide-react";
 
@@ -11,7 +11,7 @@ import {
 
 const initialState: TwoFactorChallengeFormState = { status: "idle" };
 
-export default function TwoFactorChallengePage() {
+function TwoFactorChallengeContent() {
   const searchParams = useSearchParams();
   const callbackURL = searchParams.get("callbackURL") ?? "";
   const [useRecoveryCode, setUseRecoveryCode] = useState(false);
@@ -107,5 +107,13 @@ export default function TwoFactorChallengePage() {
         </button>
       </div>
     </main>
+  );
+}
+
+export default function TwoFactorChallengePage() {
+  return (
+    <Suspense fallback={null}>
+      <TwoFactorChallengeContent />
+    </Suspense>
   );
 }

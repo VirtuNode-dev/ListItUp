@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { Suspense, useActionState, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -18,7 +18,7 @@ import { signUpAction, type SignUpFormState } from "./actions";
 
 const initialState: SignUpFormState = { status: "idle" };
 
-export default function SignUpPage() {
+function SignUpContent() {
   const searchParams = useSearchParams();
   const lockedEmail = searchParams.get("email") ?? "";
   const callbackURL = searchParams.get("callbackURL") ?? "";
@@ -161,5 +161,13 @@ export default function SignUpPage() {
         </Link>
       </p>
     </AuthPageShell>
+  );
+}
+
+export default function SignUpPage() {
+  return (
+    <Suspense fallback={null}>
+      <SignUpContent />
+    </Suspense>
   );
 }

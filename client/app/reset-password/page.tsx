@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { Suspense, useActionState, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ArrowUpRight, Eye, EyeClosed, LockKeyhole } from "lucide-react";
 
@@ -10,7 +10,7 @@ import { resetPasswordAction, type ResetPasswordFormState } from "./actions";
 
 const initialState: ResetPasswordFormState = { status: "idle" };
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token") ?? "";
   const [state, formAction, isPending] = useActionState(
@@ -91,5 +91,13 @@ export default function ResetPasswordPage() {
         </button>
       </form>
     </AuthPageShell>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={null}>
+      <ResetPasswordContent />
+    </Suspense>
   );
 }

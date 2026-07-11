@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { Suspense, useActionState, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Mail } from "lucide-react";
 
@@ -13,7 +13,7 @@ import {
 
 const initialResendState: ResendFormState = { status: "idle" };
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email") ?? "";
   const returnTo = searchParams.get("returnTo") ?? "";
@@ -103,5 +103,13 @@ export default function VerifyEmailPage() {
         </form>
       </div>
     </main>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={null}>
+      <VerifyEmailContent />
+    </Suspense>
   );
 }

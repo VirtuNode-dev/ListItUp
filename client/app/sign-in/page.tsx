@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { Suspense, useActionState, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -26,7 +26,7 @@ const DEFAULT_CALLBACK_URL = "/my-tasks";
 
 type SignInMode = "password" | "magic-link";
 
-export default function SignInPage() {
+function SignInContent() {
   const searchParams = useSearchParams();
   const callbackURL = searchParams.get("callbackURL") ?? DEFAULT_CALLBACK_URL;
   const [mode, setMode] = useState<SignInMode>("password");
@@ -229,5 +229,13 @@ export default function SignInPage() {
         </Link>
       </p>
     </AuthPageShell>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={null}>
+      <SignInContent />
+    </Suspense>
   );
 }
