@@ -5,9 +5,9 @@ import { KeyRound, LockKeyhole, ShieldOff } from "lucide-react";
 
 import {
   disableTwoFactorAction,
-  initialDisableTwoFactorState,
-  initialRegenerateBackupCodesState,
   regenerateBackupCodesAction,
+  type DisableTwoFactorState,
+  type RegenerateBackupCodesState,
 } from "./actions";
 
 const inputWrapperClass =
@@ -16,6 +16,10 @@ const inputClass =
   "h-[58px] min-w-0 flex-1 bg-transparent px-4 text-sm text-white outline-none placeholder:text-neutral-700";
 const secondaryButtonClass =
   "mt-2 inline-flex h-[58px] min-h-[58px] items-center justify-center gap-3 border border-[#1a1a1a] bg-[#0d0d0d]/95 px-6 py-4 text-sm text-neutral-300 transition-colors hover:border-[#333333] hover:text-white disabled:cursor-not-allowed disabled:opacity-50";
+const initialDisableTwoFactorState: DisableTwoFactorState = { status: "idle" };
+const initialRegenerateBackupCodesState: RegenerateBackupCodesState = {
+  status: "idle",
+};
 
 export function TwoFactorEnabledPanel() {
   const [disableState, disableFormAction, isDisabling] = useActionState(

@@ -11,8 +11,6 @@ import { resendVerificationEmailIfAllowed } from "@/lib/verification-resend";
 
 export type ResendFormState = { status: "idle" } | { status: "sent" };
 
-export const initialResendState: ResendFormState = { status: "idle" };
-
 const DEFAULT_RETURN_TO = "/my-tasks";
 
 function readReturnTo(formData: FormData): string {

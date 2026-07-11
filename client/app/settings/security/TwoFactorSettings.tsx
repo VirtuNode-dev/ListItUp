@@ -6,8 +6,8 @@ import { KeyRound, LockKeyhole, ShieldCheck } from "lucide-react";
 import {
   confirmTwoFactorEnrollmentAction,
   enableTwoFactorAction,
-  initialConfirmTwoFactorState,
-  initialEnableTwoFactorState,
+  type ConfirmTwoFactorState,
+  type EnableTwoFactorState,
 } from "./actions";
 import { TwoFactorEnabledPanel } from "./TwoFactorEnabledPanel";
 
@@ -17,6 +17,8 @@ const inputClass =
   "h-[58px] min-w-0 flex-1 bg-transparent px-4 text-sm text-white outline-none placeholder:text-neutral-700";
 const primaryButtonClass =
   "mt-2 inline-flex h-[58px] min-h-[58px] items-center justify-center gap-3 border border-[#ff6b4a] bg-[#ff6b4a] px-6 py-4 text-sm font-medium text-black shadow-[0_0_0_1px_rgba(255,107,74,.18),0_18px_60px_rgba(255,107,74,.12)] transition-colors hover:bg-[#ff8a70] focus:outline-none focus:ring-2 focus:ring-[#ff8a70] focus:ring-offset-2 focus:ring-offset-[#080808] disabled:cursor-not-allowed disabled:opacity-60";
+const initialEnableTwoFactorState: EnableTwoFactorState = { status: "idle" };
+const initialConfirmTwoFactorState: ConfirmTwoFactorState = { status: "idle" };
 
 export function TwoFactorSettings({
   twoFactorEnabled,

@@ -7,10 +7,6 @@ import { normalizeEmail } from "@/lib/normalize-email";
 
 export type ForgotPasswordFormState = { status: "idle" } | { status: "sent" };
 
-export const initialForgotPasswordState: ForgotPasswordFormState = {
-  status: "idle",
-};
-
 export async function requestPasswordResetAction(
   _prevState: ForgotPasswordFormState,
   formData: FormData

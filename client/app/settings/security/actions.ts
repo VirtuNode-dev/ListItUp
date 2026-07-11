@@ -32,10 +32,6 @@ export type EnableTwoFactorState =
       backupCodes: string[];
     };
 
-export const initialEnableTwoFactorState: EnableTwoFactorState = {
-  status: "idle",
-};
-
 function extractTotpSecret(totpURI: string): string {
   try {
     return new URL(totpURI).searchParams.get("secret") ?? "";
@@ -83,10 +79,6 @@ export type ConfirmTwoFactorState =
   | { status: "error"; message: string }
   | { status: "confirmed" };
 
-export const initialConfirmTwoFactorState: ConfirmTwoFactorState = {
-  status: "idle",
-};
-
 export async function confirmTwoFactorEnrollmentAction(
   _prevState: ConfirmTwoFactorState,
   formData: FormData
@@ -120,10 +112,6 @@ export type ChangePasswordState =
   | { status: "idle" }
   | { status: "error"; message: string }
   | { status: "success" };
-
-export const initialChangePasswordState: ChangePasswordState = {
-  status: "idle",
-};
 
 export async function changePasswordAction(
   _prevState: ChangePasswordState,
@@ -163,10 +151,6 @@ export type RequestEmailChangeState =
   | { status: "idle" }
   | { status: "error"; message: string }
   | { status: "sent" };
-
-export const initialRequestEmailChangeState: RequestEmailChangeState = {
-  status: "idle",
-};
 
 async function verifyInlineTwoFactorCode(
   userId: string,
@@ -293,10 +277,6 @@ export type DisableTwoFactorState =
   | { status: "error"; message: string }
   | { status: "success" };
 
-export const initialDisableTwoFactorState: DisableTwoFactorState = {
-  status: "idle",
-};
-
 export async function disableTwoFactorAction(
   _prevState: DisableTwoFactorState,
   formData: FormData
@@ -357,10 +337,6 @@ export type RegenerateBackupCodesState =
   | { status: "idle" }
   | { status: "error"; message: string }
   | { status: "success"; backupCodes: string[] };
-
-export const initialRegenerateBackupCodesState: RegenerateBackupCodesState = {
-  status: "idle",
-};
 
 export async function regenerateBackupCodesAction(
   _prevState: RegenerateBackupCodesState,

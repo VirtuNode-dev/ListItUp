@@ -13,10 +13,20 @@ RUN pnpm install --frozen-lockfile
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# DATABASE_URL isn't queried at build time, only required so prisma.config.ts
-# and lib/database-url.ts don't throw while `pnpm build` runs its
-# prebuild (prisma generate) step.
+# These build-only placeholders let Next.js evaluate the auth route while
+# collecting page data. The runner stage does not inherit them; Dokploy must
+# provide real database, Better Auth, and SMTP values at runtime.
 ENV DATABASE_URL="postgresql://build:build@localhost:5432/build"
+ENV BETTER_AUTH_SECRET="build-only-not-a-production-secret"
+ENV BETTER_AUTH_URL="http://localhost:3000"
+ENV MAIL_PROVIDER="custom"
+ENV SMTP_HOST="localhost"
+ENV SMTP_PORT="2525"
+ENV SMTP_SECURE="false"
+ENV SMTP_USER="build"
+ENV SMTP_PASSWORD="build"
+ENV MAIL_FROM_NAME="ListItUp"
+ENV MAIL_FROM_EMAIL="no-reply@listitup.build"
 RUN pnpm build
 
 FROM base AS runner

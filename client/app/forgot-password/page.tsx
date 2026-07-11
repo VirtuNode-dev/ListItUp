@@ -6,9 +6,11 @@ import { ArrowUpRight, Mail } from "lucide-react";
 
 import { AuthPageShell } from "@/components/auth/AuthPageShell";
 import {
-  initialForgotPasswordState,
   requestPasswordResetAction,
+  type ForgotPasswordFormState,
 } from "./actions";
+
+const initialForgotPasswordState: ForgotPasswordFormState = { status: "idle" };
 
 export default function ForgotPasswordPage() {
   const [state, formAction, isPending] = useActionState(

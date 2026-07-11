@@ -6,10 +6,12 @@ import { Mail } from "lucide-react";
 
 import { VERIFICATION_RESEND_COOLDOWN_SECONDS } from "@/lib/auth-config";
 import {
-  initialResendState,
   resendVerificationAction,
   signOutAction,
+  type ResendFormState,
 } from "./actions";
+
+const initialResendState: ResendFormState = { status: "idle" };
 
 export default function VerifyEmailPage() {
   const searchParams = useSearchParams();

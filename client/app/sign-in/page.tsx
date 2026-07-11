@@ -14,13 +14,14 @@ import {
 
 import { AuthPageShell } from "@/components/auth/AuthPageShell";
 import {
-  initialMagicLinkState,
   requestMagicLinkAction,
   signInAction,
+  type MagicLinkFormState,
   type SignInFormState,
 } from "./actions";
 
 const initialSignInState: SignInFormState = { status: "idle" };
+const initialMagicLinkState: MagicLinkFormState = { status: "idle" };
 const DEFAULT_CALLBACK_URL = "/my-tasks";
 
 type SignInMode = "password" | "magic-link";

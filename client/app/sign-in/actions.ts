@@ -61,8 +61,6 @@ export async function signInAction(
 
 export type MagicLinkFormState = { status: "idle" } | { status: "sent" };
 
-export const initialMagicLinkState: MagicLinkFormState = { status: "idle" };
-
 export async function requestMagicLinkAction(
   _prevState: MagicLinkFormState,
   formData: FormData
