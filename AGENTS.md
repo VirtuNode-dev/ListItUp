@@ -16,6 +16,7 @@ Claude Code imports these automatically into every session in this repo (do not 
 - Treat `sample.html` as the current visual reference implementation for `DESIGN.md`.
 - Prefer small vertical slices that are demoable end to end.
 - Use test-driven development for product behavior: one failing behavior test, minimal implementation, then refactor.
+- Treat `client/prisma/schema.prisma` as the only source of truth for database changes. Create development migrations with `pnpm exec prisma migrate dev --name <descriptive_name>` from `client/`; never manually create or edit `client/prisma/migrations/**/migration.sql`. Apply already-committed migrations in deployed environments only with `pnpm run prisma:migrate`.
 - Keep implementation details out of `CONTEXT.md`; it is a domain glossary, not a spec.
 - Record meaningful architecture decisions in `docs/ADR/`.
 - Put planned specs in `docs/Specs-Planned/` and move completed specs to `docs/Specs-Completed/` when shipped.
