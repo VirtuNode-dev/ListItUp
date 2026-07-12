@@ -20,7 +20,7 @@ export function AuthPageShell({
   children,
 }: AuthPageShellProps) {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#080808] text-neutral-300">
+    <main className="auth-page min-h-screen overflow-x-hidden bg-[#080808] text-neutral-300">
       <section className="grid min-h-screen w-full overflow-hidden bg-[#080808] lg:grid-cols-[70fr_30fr]">
         <div className="relative min-h-[430px] overflow-hidden border-b border-[#1a1a1a] bg-[#050505] sm:min-h-[520px] lg:min-h-screen lg:border-b-0 lg:border-r">
           <div className="absolute -inset-x-16 -inset-y-10 opacity-80 sm:-inset-x-20 lg:-inset-x-24 lg:-inset-y-12">

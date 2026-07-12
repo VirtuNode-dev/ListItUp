@@ -132,3 +132,13 @@ body {
     @apply font-sans;
   }
 }
+
+/* Keep browser-saved credentials consistent with the dark auth fields. */
+.auth-page input:-webkit-autofill,
+.auth-page input:-webkit-autofill:hover,
+.auth-page input:-webkit-autofill:focus,
+.auth-page input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #0d0d0d inset;
+  -webkit-text-fill-color: #ffffff;
+  caret-color: #ffffff;
+}
