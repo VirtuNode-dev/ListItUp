@@ -67,9 +67,11 @@ export function AuthOAuthButtons() {
         </button>
       </div>
 
-      <p className="sr-only" role="status" aria-live="polite">
-        {status}
-      </p>
+      {status ? (
+        <p className="sr-only" role="status" aria-live="polite">
+          {status}
+        </p>
+      ) : null}
     </div>
   );
 }
