@@ -138,7 +138,70 @@ body {
 .auth-page input:-webkit-autofill:hover,
 .auth-page input:-webkit-autofill:focus,
 .auth-page input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px #0d0d0d inset;
-  -webkit-text-fill-color: #ffffff;
-  caret-color: #ffffff;
+  -webkit-box-shadow: 0 0 0 1000px #0e1113 inset;
+  -webkit-text-fill-color: #e6e6e6;
+  caret-color: #e6e6e6;
+}
+
+/* Grid/telemetry decoration for the auth pages' status pane (AuthStatusPane). */
+.auth-status-pane {
+  --grid-size: min(16.7vw, 10.5rem);
+  --grid-line-x: 3.25rem;
+  --grid-line-y: 3.5rem;
+  --grid-plus-x: calc(var(--grid-line-x) - 5px);
+  --grid-plus-y: calc(var(--grid-line-y) - 5px);
+}
+.auth-terrain-grid {
+  background-image:
+    linear-gradient(to right, rgb(49 54 58 / 0.76) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(49 54 58 / 0.76) 1px, transparent 1px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='168' height='168' viewBox='0 0 168 168'%3E%3Cpath d='M0 5h10M5 0v10' stroke='%2331363a' stroke-opacity='.95' stroke-width='.8'/%3E%3C/svg%3E");
+  background-size:
+    var(--grid-size) var(--grid-size),
+    var(--grid-size) var(--grid-size),
+    var(--grid-size) var(--grid-size);
+  background-position:
+    var(--grid-line-x) var(--grid-line-y),
+    var(--grid-line-x) var(--grid-line-y),
+    var(--grid-plus-x) var(--grid-plus-y);
+  /* Grid container is the upper 50%: first half stays crisp, second half fades away. */
+  mask-image: linear-gradient(to bottom, black 0%, black 50%, transparent 100%);
+}
+.auth-terrain-canvas {
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 50%,
+    rgb(0 0 0 / 0.62) 68%,
+    rgb(0 0 0 / 0.16) 75%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 50%,
+    rgb(0 0 0 / 0.62) 68%,
+    rgb(0 0 0 / 0.16) 75%,
+    transparent 100%
+  );
+}
+
+/* Custom check-mark for the sign-in "remember me" checkbox. */
+input[name="remember"] + span {
+  position: relative;
+  line-height: 1;
+}
+input[name="remember"]:checked + span {
+  font-size: 0;
+}
+input[name="remember"]:checked + span::after {
+  content: "";
+  position: absolute;
+  width: 0.42rem;
+  height: 0.22rem;
+  border-bottom: 1.5px solid #0b0d0f;
+  border-left: 1.5px solid #0b0d0f;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%) rotate(-45deg);
 }

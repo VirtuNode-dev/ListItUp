@@ -28,6 +28,7 @@ export async function signInAction(
   const email = normalizeEmail(formData.get("email"));
   const password = String(formData.get("password") ?? "");
   const callbackURL = readCallbackUrl(formData);
+  const rememberMe = formData.get("remember") === "on";
 
   if (!email || !password) {
     return { status: "error", message: "Enter your email and password." };
@@ -37,7 +38,7 @@ export async function signInAction(
 
   try {
     result = await auth.api.signInEmail({
-      body: { email, password, callbackURL },
+      body: { email, password, callbackURL, rememberMe },
       headers: await headers(),
     });
   } catch (error) {
@@ -57,32 +58,4 @@ export async function signInAction(
   }
 
   redirect(callbackURL);
-}
-
-export type MagicLinkFormState =
-  | { status: "idle" }
-  | { status: "sent" }
-  | { status: "error"; message: string };
-
-const RETRY_EMAIL_MESSAGE = "We couldn't send that email. Please try again.";
-
-export async function requestMagicLinkAction(
-  _prevState: MagicLinkFormState,
-  formData: FormData
-): Promise<MagicLinkFormState> {
-  const email = normalizeEmail(formData.get("email"));
-  const callbackURL = readCallbackUrl(formData);
-
-  if (email) {
-    try {
-      await auth.api.signInMagicLink({
-        body: { email, callbackURL },
-        headers: await headers(),
-      });
-    } catch {
-      return { status: "error", message: RETRY_EMAIL_MESSAGE };
-    }
-  }
-
-  return { status: "sent" };
 }

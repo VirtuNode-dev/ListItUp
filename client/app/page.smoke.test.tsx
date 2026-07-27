@@ -1,15 +1,15 @@
 import assert from "node:assert/strict";
-import { renderToStaticMarkup } from "react-dom/server";
 import Home from "./page";
 
-const html = renderToStaticMarkup(<Home />);
+let digest = "";
 
-assert.match(html, /ListItUp/);
-assert.match(html, /Sign in/);
-assert.match(html, /Sign up/);
-assert.match(html, /Email magic link/);
-assert.doesNotMatch(html, /Sign in to My Tasks/);
-assert.doesNotMatch(html, /Inbox List/);
-assert.doesNotMatch(html, /Verification path/);
+try {
+  Home();
+  assert.fail("expected Home() to redirect");
+} catch (error) {
+  digest = (error as { digest?: string }).digest ?? "";
+}
+
+assert.match(digest, /^NEXT_REDIRECT;.*\/sign-in;/);
 
 console.log("page smoke test passed");
