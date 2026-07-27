@@ -10,9 +10,14 @@ import { normalizeEmail } from "@/lib/auth/normalize-email";
 
 export type SignInFormState =
   { status: "idle" } | { status: "error"; message: string };
+export type MagicLinkFormState =
+  | { status: "idle" }
+  | { status: "sent" }
+  | { status: "error"; message: string };
 
 const DEFAULT_CALLBACK_URL = "/my-tasks";
 const INVALID_CREDENTIALS_MESSAGE = "Incorrect email or password.";
+const RETRY_EMAIL_MESSAGE = "We couldn't send that email. Please try again.";
 
 function readCallbackUrl(formData: FormData): string {
   const value = formData.get("callbackURL");
@@ -28,6 +33,7 @@ export async function signInAction(
   const email = normalizeEmail(formData.get("email"));
   const password = String(formData.get("password") ?? "");
   const callbackURL = readCallbackUrl(formData);
+  const rememberMe = formData.get("remember") === "on";
 
   if (!email || !password) {
     return { status: "error", message: "Enter your email and password." };
@@ -37,7 +43,7 @@ export async function signInAction(
 
   try {
     result = await auth.api.signInEmail({
-      body: { email, password, callbackURL },
+      body: { email, password, callbackURL, rememberMe },
       headers: await headers(),
     });
   } catch (error) {
@@ -59,8 +65,6 @@ export async function signInAction(
   redirect(callbackURL);
 }
 
-export type MagicLinkFormState = { status: "idle" } | { status: "sent" };
-
 export async function requestMagicLinkAction(
   _prevState: MagicLinkFormState,
   formData: FormData
@@ -69,15 +73,15 @@ export async function requestMagicLinkAction(
   const callbackURL = readCallbackUrl(formData);
 
   if (email) {
-    await auth.api
-      .signInMagicLink({
+    try {
+      await auth.api.signInMagicLink({
         body: { email, callbackURL },
         headers: await headers(),
-      })
-      .catch(() => undefined);
+      });
+    } catch {
+      return { status: "error", message: RETRY_EMAIL_MESSAGE };
+    }
   }
 
-  // Magic-link request is generic by design at the Better Auth layer too:
-  // it never checks whether the email exists before responding.
   return { status: "sent" };
 }

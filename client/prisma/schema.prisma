@@ -21,6 +21,10 @@ model User {
   workspaces       Workspace[]
   twoFactor        TwoFactor[]
   workspaceMembers WorkspaceMember[]
+  platformRoleAssignments PlatformRoleAssignment[] @relation("PlatformRoleAssignmentUser")
+  grantedPlatformRoleAssignments PlatformRoleAssignment[] @relation("PlatformRoleAssignmentGranter")
+  revokedPlatformRoleAssignments PlatformRoleAssignment[] @relation("PlatformRoleAssignmentRevoker")
+  securityEvents SecurityEvent[]
 
   @@map("user")
 }
@@ -151,4 +155,60 @@ model TwoFactor {
   @@index([secret])
   @@index([userId])
   @@map("two_factor")
+}
+
+model PlatformRoleAssignment {
+  id              String    @id
+  userId          String
+  grantedByUserId String
+  grantedAt       DateTime  @default(now())
+  revokedAt       DateTime?
+  revokedByUserId String?
+  user            User      @relation("PlatformRoleAssignmentUser", fields: [userId], references: [id], onDelete: Cascade)
+  grantedByUser   User      @relation("PlatformRoleAssignmentGranter", fields: [grantedByUserId], references: [id], onDelete: Restrict)
+  revokedByUser   User?     @relation("PlatformRoleAssignmentRevoker", fields: [revokedByUserId], references: [id], onDelete: Restrict)
+
+  @@index([userId, revokedAt])
+  @@map("platform_role_assignment")
+}
+
+model SecurityEvent {
+  id        String   @id
+  type      String
+  userId    String?
+  email     String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([userId, createdAt])
+  @@map("security_event")
+}
+
+model SecurityNoticeOutbox {
+  id             String   @id
+  recipient      String
+  type           String
+  action         String?
+  newEmail       String?
+  status         String   @default("pending")
+  attemptCount   Int      @default(0)
+  nextAttemptAt  DateTime @default(now())
+  lastAttemptAt  DateTime?
+  deliveredAt    DateTime?
+  finalFailureAt DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([status, nextAttemptAt])
+  @@index([status, finalFailureAt])
+  @@map("security_notice_outbox")
+}
+
+model SecurityAlertDispatch {
+  subject   String   @id
+  alertedAt DateTime @default(now())
+
+  @@map("security_alert_dispatch")
 }

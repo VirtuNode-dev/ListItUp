@@ -1,18 +1,15 @@
 "use client";
 
 import { Suspense, useActionState, useState } from "react";
+import type { FocusEvent, FormEvent } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import {
-  ArrowUpRight,
-  Eye,
-  EyeClosed,
-  LockKeyhole,
-  Mail,
-  Sparkles,
-} from "lucide-react";
 
 import { AuthPageShell } from "@/components/auth/AuthPageShell";
+import { AuthTextField } from "@/components/auth/AuthTextField";
+import { AuthPasswordField } from "@/components/auth/AuthPasswordField";
+import { AuthSubmitButton } from "@/components/auth/AuthSubmitButton";
+import { AuthOAuthButtons } from "@/components/auth/AuthOAuthButtons";
 import {
   requestMagicLinkAction,
   signInAction,
@@ -24,208 +21,182 @@ const initialSignInState: SignInFormState = { status: "idle" };
 const initialMagicLinkState: MagicLinkFormState = { status: "idle" };
 const DEFAULT_CALLBACK_URL = "/my-tasks";
 
-type SignInMode = "password" | "magic-link";
+function requiredFieldMessage(fieldName: string): string {
+  return fieldName === "email"
+    ? "Please enter your email address."
+    : "Please enter your password.";
+}
+
+function validateField(field: HTMLInputElement): string {
+  if (!field.value.trim()) return requiredFieldMessage(field.name);
+  if (field.type === "email" && !field.validity.valid) {
+    return "Email addresses need an @ symbol. Try: name@example.com";
+  }
+  return "";
+}
 
 function SignInContent() {
   const searchParams = useSearchParams();
   const callbackURL = searchParams.get("callbackURL") ?? DEFAULT_CALLBACK_URL;
-  const [mode, setMode] = useState<SignInMode>("password");
-  const [showPassword, setShowPassword] = useState(false);
   const [signInState, signInFormAction, isSigningIn] = useActionState(
     signInAction,
     initialSignInState
   );
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [mode, setMode] = useState<"password" | "magic-link">("password");
   const [magicLinkState, magicLinkFormAction, isSendingMagicLink] =
     useActionState(requestMagicLinkAction, initialMagicLinkState);
 
+  function handleBlur(event: FocusEvent<HTMLInputElement>) {
+    const message = validateField(event.target);
+    if (event.target.name === "email") {
+      setEmailError(message);
+    } else {
+      setPasswordError(message);
+    }
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    const form = event.currentTarget;
+    const email = form.elements.namedItem("email") as HTMLInputElement;
+    const password = form.elements.namedItem("password") as HTMLInputElement;
+
+    const nextEmailError = validateField(email);
+    const nextPasswordError = validateField(password);
+    setEmailError(nextEmailError);
+    setPasswordError(nextPasswordError);
+
+    if (nextEmailError || nextPasswordError) {
+      event.preventDefault();
+      (nextEmailError ? email : password).focus();
+    }
+  }
+
   return (
     <AuthPageShell
-      kicker="// Sign in"
-      heroTitle="Turn scattered work into clear lists."
-      heroCopy="Capture Items, review My Tasks, and keep shared Workspaces moving without making organization feel like another job."
+      kicker="Access"
+      heroTitle="Welcome back."
+      heroCopy="Sign in to pick up where your work left off."
     >
       {mode === "password" ? (
-        <form action={signInFormAction} className="grid gap-5">
+        <form
+          action={signInFormAction}
+          onSubmit={handleSubmit}
+          noValidate
+          className="grid gap-4"
+        >
           <input type="hidden" name="callbackURL" value={callbackURL} />
 
-          <div className="group">
-            <label
-              htmlFor="email"
-              className="mb-3 block font-mono text-[11px] uppercase tracking-[0.22em] text-neutral-500"
-            >
-              Email
-            </label>
-            <div className="flex items-center border border-[#1a1a1a] bg-[#0d0d0d]/95 transition-colors group-hover:border-[#333333] group-focus-within:border-[#ff6b4a]">
-              <Mail
-                className="ml-4 h-5 w-5 text-neutral-600"
-                strokeWidth={1.7}
-                aria-hidden="true"
-              />
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                placeholder="you@example.com"
-                required
-                className="h-[58px] min-w-0 flex-1 bg-transparent px-4 text-sm text-white outline-none placeholder:text-neutral-700"
-              />
-            </div>
-          </div>
+          <AuthTextField
+            id="email"
+            name="email"
+            type="email"
+            inputMode="email"
+            label="Email address"
+            autoComplete="email"
+            placeholder="you@company.com"
+            required
+            error={emailError}
+            onBlur={handleBlur}
+          />
 
-          <div className="group">
-            <div className="mb-3 flex items-center justify-between gap-4">
-              <label
-                htmlFor="password"
-                className="block font-mono text-[11px] uppercase tracking-[0.22em] text-neutral-500"
-              >
-                Password
-              </label>
-              <Link
-                href="/forgot-password"
-                className="text-xs text-neutral-500 underline decoration-[#333333] underline-offset-4 transition-colors hover:text-white"
-              >
-                Forgot password?
-              </Link>
-            </div>
-            <div className="flex items-center border border-[#1a1a1a] bg-[#0d0d0d]/95 transition-colors group-hover:border-[#333333] group-focus-within:border-[#ff6b4a]">
-              <LockKeyhole
-                className="ml-4 h-5 w-5 text-neutral-600"
-                strokeWidth={1.7}
+          <AuthPasswordField
+            id="password"
+            name="password"
+            label="Password"
+            autoComplete="current-password"
+            placeholder="Enter your password"
+            required
+            error={passwordError}
+            onBlur={handleBlur}
+          />
+
+          <div className="flex items-center justify-between gap-4">
+            <label className="flex min-h-11 w-fit cursor-pointer items-center gap-3 text-sm text-[#a5aaaf]">
+              <input className="peer sr-only" type="checkbox" name="remember" />
+              <span
+                className="grid size-4 place-items-center rounded border border-[#31363a] bg-[#0e1113] text-xs text-[#0e1113] peer-checked:border-[#c4581a] peer-checked:bg-[#c4581a] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#c4581a]"
                 aria-hidden="true"
-              />
-              <input
-                id="password"
-                name="password"
-                type={showPassword ? "text" : "password"}
-                autoComplete="current-password"
-                placeholder="Enter password"
-                required
-                className="h-[58px] min-w-0 flex-1 bg-transparent px-4 text-sm text-white outline-none placeholder:text-neutral-700"
-              />
-              <button
-                type="button"
-                className="relative grid h-[58px] w-[58px] place-items-center overflow-hidden text-neutral-600 transition-colors hover:text-white"
-                aria-label={showPassword ? "Hide password" : "Show password"}
-                aria-pressed={showPassword}
-                onClick={() => setShowPassword((value) => !value)}
               >
-                {showPassword ? (
-                  <EyeClosed
-                    className="h-5 w-5"
-                    strokeWidth={1.7}
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <Eye
-                    className="h-5 w-5"
-                    strokeWidth={1.7}
-                    aria-hidden="true"
-                  />
-                )}
-              </button>
-            </div>
+                ✓
+              </span>
+              Remember me
+            </label>
+            <Link
+              href="/forgot-password"
+              className="text-sm text-[#c4581a] underline-offset-4 transition hover:text-[#e6e6e6] hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c4581a]"
+            >
+              Forgot password?
+            </Link>
           </div>
 
           {signInState.status === "error" ? (
-            <p role="alert" className="text-sm text-[#ff8a70]">
+            <p role="alert" className="text-sm text-[#e17a6a]">
               {signInState.message}
             </p>
           ) : null}
 
-          <button
-            type="submit"
-            disabled={isSigningIn}
-            className="mt-4 inline-flex h-[58px] min-h-[58px] items-center justify-center gap-3 border border-[#ff6b4a] bg-[#ff6b4a] px-6 py-4 text-sm font-medium text-black shadow-[0_0_0_1px_rgba(255,107,74,.18),0_18px_60px_rgba(255,107,74,.12)] transition-colors hover:bg-[#ff8a70] focus:outline-none focus:ring-2 focus:ring-[#ff8a70] focus:ring-offset-2 focus:ring-offset-[#080808] disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            <span>{isSigningIn ? "Signing in..." : "Sign in"}</span>
-            <ArrowUpRight
-              className="h-5 w-5"
-              strokeWidth={1.8}
-              aria-hidden="true"
-            />
-          </button>
+          <AuthSubmitButton
+            pending={isSigningIn}
+            label="Sign in"
+            pendingLabel="Signing in..."
+            showIdleIcon={false}
+          />
         </form>
       ) : (
-        <form action={magicLinkFormAction} className="grid gap-5">
+        <form action={magicLinkFormAction} className="grid gap-4">
           <input type="hidden" name="callbackURL" value={callbackURL} />
-
-          <div className="group">
-            <label
-              htmlFor="magic-link-email"
-              className="mb-3 block font-mono text-[11px] uppercase tracking-[0.22em] text-neutral-500"
-            >
-              Email
-            </label>
-            <div className="flex items-center border border-[#1a1a1a] bg-[#0d0d0d]/95 transition-colors group-hover:border-[#333333] group-focus-within:border-[#ff6b4a]">
-              <Mail
-                className="ml-4 h-5 w-5 text-neutral-600"
-                strokeWidth={1.7}
-                aria-hidden="true"
-              />
-              <input
-                id="magic-link-email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                placeholder="you@example.com"
-                required
-                className="h-[58px] min-w-0 flex-1 bg-transparent px-4 text-sm text-white outline-none placeholder:text-neutral-700"
-              />
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={isSendingMagicLink}
-            className="mt-4 inline-flex h-[58px] min-h-[58px] items-center justify-center gap-3 border border-[#ff6b4a] bg-[#ff6b4a] px-6 py-4 text-sm font-medium text-black shadow-[0_0_0_1px_rgba(255,107,74,.18),0_18px_60px_rgba(255,107,74,.12)] transition-colors hover:bg-[#ff8a70] focus:outline-none focus:ring-2 focus:ring-[#ff8a70] focus:ring-offset-2 focus:ring-offset-[#080808] disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            <span>
-              {isSendingMagicLink ? "Sending..." : "Send sign-in link"}
-            </span>
-            <ArrowUpRight
-              className="h-5 w-5"
-              strokeWidth={1.8}
-              aria-hidden="true"
-            />
-          </button>
-
+          <AuthTextField
+            id="magic-link-email"
+            name="email"
+            type="email"
+            inputMode="email"
+            label="Email"
+            autoComplete="email"
+            placeholder="you@company.com"
+            required
+          />
           {magicLinkState.status === "sent" ? (
-            <p role="status" className="text-sm text-neutral-500">
+            <p role="status" className="text-sm text-[#a5aaaf]">
               If that email has an account, a sign-in link is on its way.
             </p>
           ) : null}
+          {magicLinkState.status === "error" ? (
+            <p role="alert" className="text-sm text-[#e17a6a]">
+              {magicLinkState.message}
+            </p>
+          ) : null}
+          <AuthSubmitButton
+            pending={isSendingMagicLink}
+            label="Send sign-in link"
+            pendingLabel="Sending..."
+            showIdleIcon={false}
+          />
         </form>
       )}
 
-      <div className="mt-9 border-t border-[#1a1a1a] pt-7">
-        <button
-          type="button"
-          onClick={() =>
-            setMode((current) =>
-              current === "password" ? "magic-link" : "password"
-            )
-          }
-          className="group flex min-h-[58px] w-full items-center justify-between border border-[#1a1a1a] bg-[#0b0b0b]/80 px-5 py-4 text-left transition-colors hover:border-[#333333] hover:bg-[#101010]/80"
-        >
-          <span className="text-sm text-neutral-500 transition-colors group-hover:text-white">
-            {mode === "password" ? "Email magic link" : "Use password instead"}
-          </span>
-          <Sparkles
-            className="h-5 w-5 text-[#ff6b4a]"
-            strokeWidth={1.7}
-            aria-hidden="true"
-          />
-        </button>
-      </div>
+      <button
+        type="button"
+        className="mt-5 text-sm text-[#a5aaaf] underline-offset-4 transition hover:text-[#e6e6e6] hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c4581a]"
+        onClick={() =>
+          setMode((current) =>
+            current === "password" ? "magic-link" : "password"
+          )
+        }
+      >
+        {mode === "password" ? "Email magic link" : "Use password instead"}
+      </button>
 
-      <p className="mt-8 text-sm text-neutral-500">
-        Don&apos;t have an account?{" "}
+      <AuthOAuthButtons />
+
+      <p className="text-center text-sm text-[#a5aaaf]">
+        New to ListItUp?{" "}
         <Link
           href="/sign-up"
-          className="text-white underline decoration-[#333333] underline-offset-4 hover:decoration-[#ff6b4a]"
+          className="font-medium text-[#c4581a] underline-offset-4 transition hover:text-[#e6e6e6] hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c4581a]"
         >
-          Sign up
+          Create an account
         </Link>
       </p>
     </AuthPageShell>

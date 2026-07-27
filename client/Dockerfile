@@ -17,6 +17,7 @@ COPY . .
 # page data. They exist only for this command; Dokploy supplies real values at
 # runtime and Docker does not persist them in the image configuration.
 RUN DATABASE_URL="postgresql://build:build@localhost:5432/build" \
+  REDIS_URL="redis://localhost:6379" \
   BETTER_AUTH_SECRET="build-only-not-a-production-secret" \
   BETTER_AUTH_URL="http://localhost:3000" \
   MAIL_PROVIDER="custom" \
