@@ -10,9 +10,14 @@ import { normalizeEmail } from "@/lib/auth/normalize-email";
 
 export type SignInFormState =
   { status: "idle" } | { status: "error"; message: string };
+export type MagicLinkFormState =
+  | { status: "idle" }
+  | { status: "sent" }
+  | { status: "error"; message: string };
 
 const DEFAULT_CALLBACK_URL = "/my-tasks";
 const INVALID_CREDENTIALS_MESSAGE = "Incorrect email or password.";
+const RETRY_EMAIL_MESSAGE = "We couldn't send that email. Please try again.";
 
 function readCallbackUrl(formData: FormData): string {
   const value = formData.get("callbackURL");
@@ -58,4 +63,25 @@ export async function signInAction(
   }
 
   redirect(callbackURL);
+}
+
+export async function requestMagicLinkAction(
+  _prevState: MagicLinkFormState,
+  formData: FormData
+): Promise<MagicLinkFormState> {
+  const email = normalizeEmail(formData.get("email"));
+  const callbackURL = readCallbackUrl(formData);
+
+  if (email) {
+    try {
+      await auth.api.signInMagicLink({
+        body: { email, callbackURL },
+        headers: await headers(),
+      });
+    } catch {
+      return { status: "error", message: RETRY_EMAIL_MESSAGE };
+    }
+  }
+
+  return { status: "sent" };
 }
