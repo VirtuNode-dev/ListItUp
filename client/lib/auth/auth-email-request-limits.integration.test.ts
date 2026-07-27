@@ -115,7 +115,7 @@ async function run() {
       `magic-${randomUUID()}@example.test`
     );
 
-    const ipAddress = `192.0.2.${Number.parseInt(randomUUID().slice(0, 2), 16)}`;
+    const ipAddress = "198.51.100.200";
     for (let attempt = 0; attempt < 20; attempt += 1) {
       const response = await firstAuth.handler(
         request(
