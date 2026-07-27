@@ -8,12 +8,14 @@ import { createAuth } from "./auth-core";
 import { requestPasswordResetEmail } from "./password-reset-request";
 import type { Mailer, SendEmailResult } from "@/lib/mailer/mailer-core";
 
+const authUrl = process.env.BETTER_AUTH_URL ?? "http://localhost:3000";
+
 function request(path: string, body: Record<string, string>): Request {
-  return new Request(`http://localhost:3000/api/auth${path}`, {
+  return new Request(`${authUrl}/api/auth${path}`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      origin: "http://localhost:3000",
+      origin: authUrl,
     },
     body: JSON.stringify(body),
   });
